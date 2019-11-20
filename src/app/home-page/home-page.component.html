@@ -1,1 +1,49 @@
-<p>home-page works!</p>
+<div class="container">
+  <div class="guard" *ngIf="!auth.isAuthenticated(); else authTrue">
+    <div class="guard-desc">
+      <h2>Guard "DIPLOM"</h2>
+      <hr>
+      <p>Ви знаходитесь на сторінці служби безпеки підприємства "DIPLOM"</p>
+      <p>Доступ до інформації представленої в даному додатку можуть мати лише співробітники підприємства "DIPLOM"</p>
+      <hr>
+      <p>Будь ласка, авторизуйтесь:</p>
+      <button [routerLink]="['/login']" class="button">Войти</button>
+    </div>
+    <img src="../../assets/img/logo.png" alt="">
+  </div>
+  <ng-template #authTrue>
+    <div class="guard">
+      <div class="guard-table">
+        <h2>Журнал приходу і відходу співробітників</h2>
+        <button
+          [disabled]="staffLoading"
+          (click)="reloadStaffStatus(); reloadStaffBtn();"
+        >Оновити
+        </button>
+        <hr>
+        <table *ngIf="ready && !staffLoading; else loadingBlock">
+          <thead>
+          <tr>
+            <th *ngFor="let col of columns"
+            >{{col}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let staff of staffArr">
+            <td *ngFor="let col of subColumns"
+            >{{staff[col]}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <ng-template #loadingBlock>
+          <div class="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

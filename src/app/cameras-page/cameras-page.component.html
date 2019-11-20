@@ -1,1 +1,190 @@
-<p>cameras-page works!</p>
+<div class="cameras">
+  <div class="cameras-total">
+    <div class="cams">
+      <div>
+        <iframe
+          id="camera-1"
+          class="iv-i"
+          src="https://open.ivideon.com/embed/v2/?server=100-eMu0rQpeTnFEMTgFiLyOpz&amp;camera=0&amp;width=&amp;height=&amp;lang=ru"
+          allowfullscreen
+          *ngIf="this.cameras['camera-one']; else noCam1"
+        ></iframe>
+        <ng-template #noCam1>
+          <div class="noCam">
+            <h3>Камера №1 відключена</h3>
+            <p>Для отримання додаткової інформації щодо стану камери №1 зверніться до системного адміністратора</p>
+          </div>
+        </ng-template>
+      </div>
+      <div>
+        <iframe
+          id="camera-2"
+          class="iv-i"
+          src="https://open.ivideon.com/embed/v2/?server=100-3f30b64b408bd8adb0e2f146be016076&amp;camera=0&amp;width=&amp;height=&amp;lang=ru"
+          allowfullscreen
+          *ngIf="this.cameras['camera-two']; else noCam2"
+        ></iframe>
+        <ng-template #noCam2>
+          <div class="noCam">
+            <h3>Камера №2 відключена</h3>
+            <p>Для отримання додаткової інформації щодо стану камери №2 зверніться до системного адміністратора</p>
+          </div>
+        </ng-template>
+      </div>
+      <div>
+        <iframe
+          id="camera-3"
+          class="iv-i"
+          src="https://open.ivideon.com/embed/v2/?server=100-jBTZxb1AQEd2TyNDYNjT2w&amp;camera=0&amp;width=&amp;height=&amp;lang=ru"
+          allowfullscreen
+          *ngIf="this.cameras['camera-three']; else noCam3"
+        ></iframe>
+        <ng-template #noCam3>
+          <div class="noCam">
+            <h3>Камера №3 відключена</h3>
+            <p>Для отримання додаткової інформації щодо стану камери №3 зверніться до системного адміністратора</p>
+          </div>
+        </ng-template>
+      </div>
+      <div>
+        <iframe
+          id="camera-4"
+          class="iv-i"
+          src="https://open.ivideon.com/embed/v2/?server=100-gSWxncrS5LuEt25aFGDBuV&amp;camera=0&amp;width=&amp;height=&amp;lang=ru"
+          allowfullscreen
+          *ngIf="this.cameras['camera-four']; else noCam4"
+        ></iframe>
+        <ng-template #noCam4>
+          <div class="noCam">
+            <h3>Камера №4 відключена</h3>
+            <p>Для отримання додаткової інформації щодо стану камери №4 зверніться до системного адміністратора</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="cameras-navbar">
+    <div class="status">
+      <div *ngIf="!camerasLoading; else camerasLoadingBlock">
+        <p>Стан камер:</p>
+        <p>Камера №1:</p> <img class="status-img" alt="camera-one"
+                               [src]='this.cameras["camera-one"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <p>Камера №2:</p> <img class="status-img" alt="camera-two"
+                               [src]='this.cameras["camera-two"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <p>Камера №3:</p> <img class="status-img" alt="camera-three"
+                               [src]='this.cameras["camera-three"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <p>Камера №4:</p> <img class="status-img" alt="camera-four"
+                               [src]='this.cameras["camera-four"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <button
+          [disabled]="camerasLoading"
+          (click)="reloadCamerasStatus(); reloadCamsBtn()"
+        >Status</button>
+      </div>
+      <ng-template #camerasLoadingBlock>
+        <div class="loader">
+          <div class="inner one"></div>
+          <div class="inner two"></div>
+          <div class="inner three"></div>
+        </div>
+      </ng-template>
+    </div>
+    <hr>
+    <div class="status fireStatus">
+      <div *ngIf="!fireLoading; else fireLoadingBlock">
+        <p>Стан ПБ:</p>
+        <p>Датчик №1:</p>
+        <img class="status-img" alt="sensor-1"
+             [src]='this.fire["sensor-1"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <p>Датчик №2:</p>
+        <img class="status-img" alt="sensor-2"
+             [src]='this.fire["sensor-2"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <p>Датчик №3:</p>
+        <img class="status-img" alt="sensor-3"
+             [src]='this.fire["sensor-3"] ? "../../assets/img/true.svg" : "../../assets/img/false.svg"'>
+        <button
+          [disabled]="fireLoading"
+          (click)="reloadFireStatus(); reloadFireBtn()"
+        >Status</button>
+      </div>
+      <ng-template #fireLoadingBlock>
+        <div class="loader">
+          <div class="inner one"></div>
+          <div class="inner two"></div>
+          <div class="inner three"></div>
+        </div>
+      </ng-template>
+    </div>
+    <hr>
+    <button class="warningBtn">Звітувати про порушення</button>
+  </div>
+</div>
+
+<!--modal-->
+
+<div class="modal">
+  <div class="modal-content">
+    <h2>Повідомити про порушення безпеки</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label
+        for="camera"
+        [ngClass]="{invalid: form.get('camera').touched && form.get('camera').invalid}"
+      >Укажіть номер камери на якій було помічено порушення</label>
+      <select id="camera" formControlName="camera">
+        <option value=1>Камера №1</option>
+        <option value=2>Камера №2</option>
+        <option value=3>Камера №3</option>
+        <option value=4>Камера №4</option>
+      </select>
+      <div
+        *ngIf="form.get('camera').invalid && form.get('camera').touched"
+        class="validation"
+      >
+        <small *ngIf="form.get('camera').errors.required">Камеру на якій було помічено порушення не вибрано</small>
+      </div>
+      <div class="modal-content-date">
+        <div>
+          <label
+            for="date"
+            [ngClass]="{invalid: form.get('date').touched && form.get('date').invalid}"
+          >Укажіть дату порушення</label>
+          <input id='date' type="date" formControlName="date">
+          <div
+            *ngIf="form.get('date').invalid && form.get('date').touched"
+            class="validation"
+          >
+            <small *ngIf="form.get('date').errors.required">Дата порушення не вказана</small>
+          </div>
+        </div>
+        <div>
+          <label
+            for="time"
+            [ngClass]="{invalid: form.get('time').touched && form.get('time').invalid}"
+          >Укажіть час порушення</label>
+          <input id='time' type="time" formControlName="time">
+          <div
+            *ngIf="form.get('time').invalid && form.get('time').touched"
+            class="validation"
+          >
+            <small *ngIf="form.get('time').errors.required">Час порушення не вказано</small>
+          </div>
+        </div>
+      </div>
+      <label
+        for="violation"
+        [ngClass]="{invalid: form.get('text').touched && form.get('text').invalid}"
+      >Опишіть суть порушення</label>
+      <textarea id="violation" rows="4" formControlName="text"></textarea>
+      <div
+        *ngIf="form.get('text').invalid && form.get('text').touched"
+        class="validation"
+      >
+        <small *ngIf="form.get('text').errors.required">Суть порушення не вказано</small>
+        <small *ngIf="form.get('text').errors.minlength"
+        >Довжина повинна бути не меньше {{form.get('text').errors.minlength.requiredLength}} символів.
+        Зараз символів {{form.get('text').errors.minlength.actualLength}}</small>
+      </div>
+      <button type="submit" [disabled]="form.invalid || submitted">Відправити звіт про порушення</button>
+    </form>
+    <button class="close">&times;</button>
+  </div>
+</div>

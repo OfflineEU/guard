@@ -1,1 +1,61 @@
-<p>cipher-page works!</p>
+<section data-vide-bg="../assets/video/video-1">
+  <button class="btn-back" [routerLink]="['/']">На головну</button>
+  <a class="back"></a>
+
+  <div id="stage">
+    <div id="step1">
+      <div class="content">
+        <h1>Виберіть потрібну опцію:</h1>
+        <a class="cipher-button encrypt">Зашифрувати відбиток</a>
+        <a class="cipher-button decrypt">Розшифрувати відбиток</a>
+      </div>
+    </div>
+
+    <div id="step2">
+
+      <div class="content if-encrypt">
+        <h1>Виберіть відбиток, який потрібно зашифрувати</h1>
+        <a class="cipher-button browse">Відкрити</a>
+
+        <input id="encrypt-input" type="file"/>
+      </div>
+
+      <div class="content if-decrypt">
+        <h1>Виберіть відбиток, який потрібно розшифрувати</h1>
+        <a class="cipher-button browse">Відкрити</a>
+
+        <input id="decrypt-input" type="file"/>
+      </div>
+
+    </div>
+
+    <div id="step3">
+
+      <div class="content if-encrypt">
+        <h1>Введіть пароль доступу</h1>
+        <h2>Цей пароль буде використовуватись в якості ключа шифрування</h2>
+
+        <input type="password"/>
+        <a class="cipher-button process">Зашифрувати</a>
+      </div>
+
+      <div class="content if-decrypt">
+        <h1>Введіть пароль доступу</h1>
+        <h2>Введіть пароль доступу, який було вказано при шифруванні</h2>
+
+        <input type="password"/>
+        <a class="cipher-button process">Розшифрувати</a>
+      </div>
+
+    </div>
+
+    <div id="step4">
+
+      <div class="content">
+        <h1>Операцію завершено</h1>
+        <a class="cipher-button download">Завантажити</a>
+      </div>
+
+    </div>
+  </div>
+</section>

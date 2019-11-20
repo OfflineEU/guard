@@ -1,1 +1,23 @@
-<p>main-layout works!</p>
+<nav class="navbar">
+  <h1 class="logo">
+    <a [routerLink]="['/']" class="logo">
+      <img src="../../../../assets/img/logo.png" alt="logo">
+      <span>Guard</span>
+    </a>
+  </h1>
+  <p class="clock">{{date | date:'medium':null:'uk'}}</p>
+  <div class="alert-block"><app-alert></app-alert></div>
+  <div class="navbar-item" *ngIf="auth.isAuthenticated()">
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Журнал обліку</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['/cameras']">Безпека</a></li>
+      <li routerLinkActive="active"><a [routerLink]="['/cipher']">Шифрування</a></li>
+    </ul>
+    <button (click)="logout($event)">Вийти</button>
+  </div>
+</nav>
+<section>
+  <div class="wrap">
+    <router-outlet></router-outlet>
+  </div>
+</section>
