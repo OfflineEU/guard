@@ -20,7 +20,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   staffLoading = true;
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private database: DatabaseService,
     public alert: AlertService,
   ) {

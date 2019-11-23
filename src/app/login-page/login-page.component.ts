@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../shared/interfaces';
 import {AuthService} from '../shared/services/auth.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-login-page',
@@ -17,6 +18,7 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
+    private alert: AlertService,
   ) {
   }
 
@@ -37,9 +39,7 @@ export class LoginPageComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
     this.submitted = true;
-
     const user: User = {
       email: this.form.value.email,
       password: this.form.value.password
@@ -48,8 +48,10 @@ export class LoginPageComponent implements OnInit {
       this.form.reset();
       this.router.navigate(['/']);
       this.submitted = false;
+      this.alert.success('Виконаний вхід в систему');
     }, () => {
       this.submitted = false;
+      this.alert.danger('Помилка при вході в систему');
     });
   }
 }
